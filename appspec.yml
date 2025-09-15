@@ -1,0 +1,19 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /home/ec2-user/app   # Location on EC2 where your repo will be copied
+
+permissions:
+  - object: /home/ec2-user/app
+    pattern: "**"
+    owner: ec2-user
+    group: ec2-user
+    mode: 755
+
+hooks:
+  AfterInstall:
+    - location: scripts/deploy.sh    # Script to deploy your docker-compose app
+      timeout: 300
+      runas: ec2-user
